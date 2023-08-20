@@ -97,17 +97,14 @@ if(isset($_POST['submit'])) {
     $kota = $_POST['kota'];
     $jk = $_POST['jk'];
     
-    // Include database connection file
     include_once("koneksi.php");
     
-    // Process hobbies checkbox values
     $hobi = isset($_POST['hobi']) ? $_POST['hobi'] : array();
-    $hobi_values = array_map([$mysqli, 'real_escape_string'], $hobi); // Sanitize values
-    $hobi_values = implode(', ', $hobi_values); // Convert sanitized array to comma-separated string
+    $hobi_values = array_map([$mysqli, 'real_escape_string'], $hobi);
+    $hobi_values = implode(', ', $hobi_values);
 
     $ekskul = $_POST['ekskul'];
 
-    // Sanitize and validate other inputs before using in SQL query
     $nis = $mysqli->real_escape_string($nis);
     $nama = $mysqli->real_escape_string($nama);
     $kelas = $mysqli->real_escape_string($kelas);
@@ -115,12 +112,10 @@ if(isset($_POST['submit'])) {
     $alamat = $mysqli->real_escape_string($alamat);
     $kota = $mysqli->real_escape_string($kota);
     $jk = $mysqli->real_escape_string($jk);
-
-    // Insert user data into table
+    
     $result = mysqli_query($mysqli, "INSERT INTO tb_siswa (nis, nama, kelas, ttl, alamat, kota, jk, hobi, ekskul) VALUES ('$nis','$nama','$kelas','$ttl','$alamat','$kota','$jk','$hobi_values','$ekskul')");
     
     if ($result) {
-        // Show message when user added
         header("location: index.php");
     } else {
         echo "Error inserting record: " . $mysqli->error;
