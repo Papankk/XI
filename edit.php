@@ -8,18 +8,14 @@ if(isset($_POST['submit'])) {
     $kota = $_POST['kota'];
     $jk = $_POST['jk'];
     
-    // Include database connection file
     include_once("koneksi.php");
     
-    // Process hobbies checkbox values
     $hobi = isset($_POST['hobi']) ? $_POST['hobi'] : array();
     $hobi_values = implode(', ', $hobi);
 
-    // Process ekskul select list
     $ekskul = isset($_POST['ekskul']) ? $_POST['ekskul'] : array();
     $ekskul_values = implode(', ', $ekskul);
 
-    // Sanitize and validate inputs before using in SQL query
     $nis = $mysqli->real_escape_string($nis);
     $nama = $mysqli->real_escape_string($nama);
     $kelas = $mysqli->real_escape_string($kelas);
@@ -30,7 +26,6 @@ if(isset($_POST['submit'])) {
     $hobi_values = $mysqli->real_escape_string($hobi_values);
     $ekskul_values = $mysqli->real_escape_string($ekskul_values);
 
-    // Update user data in table
     $result = mysqli_query($mysqli, "UPDATE tb_siswa SET nama='$nama', kelas='$kelas', ttl='$ttl', alamat='$alamat', kota='$kota', jk='$jk', hobi='$hobi_values', ekskul='$ekskul_values' WHERE nis='$nis'");
 
     if ($result) {
@@ -39,16 +34,11 @@ if(isset($_POST['submit'])) {
         echo "Error updating record: " . $mysqli->error;
     }
 
-    // Close the database connection
-    mysqli_close($mysqli);
 } else {
-    // Retrieve existing user data and populate the form
     $nis = $_GET['nis'];
 
-    // Include database connection file
     include_once("koneksi.php");
 
-    // Retrieve user data from the database
     $query = "SELECT * FROM tb_siswa WHERE nis='$nis'";
     $result = mysqli_query($mysqli, $query);
     $row = mysqli_fetch_assoc($result);
