@@ -1,8 +1,6 @@
 <?php
-// Create database connection using config file
 include_once("koneksi.php");
  
-// Fetch all users data from database
 $result = mysqli_query($mysqli, "SELECT * FROM tb_siswa ORDER BY nis DESC");
 ?>
  
